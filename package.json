@@ -1,0 +1,18 @@
+{
+  "name": "ps-let-presentation",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "raw-loader": "^0.5.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "spectacle": "^5.0.0",
+    "spectacle-scripts": "2.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

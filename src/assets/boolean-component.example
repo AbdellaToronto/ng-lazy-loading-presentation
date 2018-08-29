@@ -1,0 +1,13 @@
+class PolicySummary implements OnInit {
+  isPolicyCanceled$: Observable<boolean>;
+
+  constructor(policiesStateService: PoliciesStateService) {}
+
+  ngOnInit() {
+    this.isPolicyCanceled$ = this.policiesStateService.getIsPolicyCanceled();
+  }
+
+  togglePolicyCancelation(isPolicyCanceled: boolean) {
+    this.policiesStateService.toggleIsPolicyCanceled(isPolicyCanceled);
+  }
+}

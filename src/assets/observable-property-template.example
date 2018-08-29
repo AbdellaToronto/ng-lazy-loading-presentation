@@ -1,0 +1,4 @@
+<div *ngIf="policy$ | async as policy">
+  <h1>{{policy.number}}</h1>
+  <p>{{policy.description}}</p>
+</div>
