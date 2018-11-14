@@ -1,28 +1,20 @@
+/* eslint import/no-webpack-loader-syntax: 0 */
+import codeLazy from './assets/code-lazy-loading-walkthrough.mp4';
+import webLazy from './assets/video_lazy_app_walkthrough.mp4';
+
 import React from 'react';
 import {
   Deck,
   Heading,
-  ListItem,
-  List,
   Slide,
   Text,
   S,
-  Appear,
+  Link,
 } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
 
 import { colours, fontFamilies } from './theme';
-import { buildCodeSlide } from './utils';
-
-/* eslint-disable import/no-webpack-loader-syntax */
-import plainPropertyComponentExample from '!raw-loader!./assets/plain-property-component.example';
-import plainPropertyTemplateExample from '!raw-loader!./assets/plain-property-template.example';
-import observablePropertyComponentExample from '!raw-loader!./assets/observable-property-component.example';
-import observablePropertyTemplateExample from '!raw-loader!./assets/observable-property-template.example';
-import booleanComponentExample from '!raw-loader!./assets/boolean-component.example';
-import booleanNgIfTemplateExample from '!raw-loader!./assets/boolean-ngif-template.example';
-import booleanPsLetTemplateExample from '!raw-loader!./assets/boolean-pslet-template.example';
-/* eslint-enable import/no-webpack-loader-syntax */
+import { AnswerSlide, QuestionSlide } from './slide-maker';
 
 require('normalize.css');
 
@@ -45,9 +37,8 @@ export default class Presentation extends React.Component {
             lineHeight={1.2}
             bold
           >
-            Exposing Observable Values in Templates Using{' '}
-            <S type="bold" textColor="blue">
-              psLet
+            Angular 5+ and <S type="bold" textColor="blue">
+              Lazy Loading
             </S>
           </Heading>
           <Text
@@ -56,192 +47,55 @@ export default class Presentation extends React.Component {
             textAlign="left"
             size={5}
           >
-            Igor Barsi
+            Abdella (Della) Ali
           </Text>
         </Slide>
+        <QuestionSlide question="What is lazy loading?" />
+        {AnswerSlide({answers: [
+            'Only load parts of your code when you specifically need it',
+            <React.Fragment>You need to implement something called <S type="bold" textColor="blue">Code-splitting</S> to help lazy loading figure out how to break up your code into chunks</React.Fragment>,
+            <React.Fragment>In <S type="bold" textColor="#f00025">Angular</S> code splitting is informed by lazily loaded routes based on <S type="bold" textColor="blue">Angular Modules</S></React.Fragment>,
+            <React.Fragment>Each <S type="bold" textColor="blue">chunk</S> is loaded into your browser when the route for that chunk is hit</React.Fragment>,
+            <React.Fragment>The Two important pieces of lazy loading are <S type="bold" textColor="blue">Code Splitting</S> and <S type="bold" textColor="blue">Asynchronously loading Chunks</S></React.Fragment>,
+          ]})}
+
+        <QuestionSlide question={<React.Fragment><S type="bold" textColor="blue">Why</S> Do this?</React.Fragment>} />
+        {AnswerSlide({answers: [
+            <React.Fragment>In large applications, the application size can be a bottleneck in improving initial load times</React.Fragment>,
+            <React.Fragment>A user may only consistently use a fraction of your application, so sending the entire app over every time can be inefficient</React.Fragment>,
+            <React.Fragment>It encourages a route level modularization of your application</React.Fragment>,
+          ]})}
+
+        <QuestionSlide question={<React.Fragment><S type="bold" textColor="blue">How</S> do I do this?</React.Fragment>} />
+        {AnswerSlide({answers: [
+            <React.Fragment>In Angular, especially while using the CLI, it's pretty straightforward</React.Fragment>,
+            <React.Fragment>You need to use the <S type="bold" textColor="blue">loadChildren</S> key in your route definition, with a path to the module</React.Fragment>,
+            <React.Fragment>The module you want to lazy load must import it's own router module instance and define it's routes</React.Fragment>,
+            <React.Fragment>And in Angular6+ you can use the provideIn syntax in a provider to handle the code-splitting of services</React.Fragment>,
+          ]})}
+
+        <QuestionSlide question={<React.Fragment><S type="bold" textColor="blue">Demo?</S></React.Fragment>} />
         <Slide>
-          <Heading size={4} lineHeight={1.2} textColor="secondary">
-            How do we get values from our{' '}
-            <S type="bold" textColor="blue">
-              component
-            </S>{' '}
-            into our{' '}
-            <S type="bold" textColor="blue">
-              template
-            </S>
-            ?
-          </Heading>
-        </Slide>
-        {buildCodeSlide({
-          source: plainPropertyComponentExample,
-          title: 'Plain Old Property (Component)',
-        })}
-        {buildCodeSlide({
-          source: plainPropertyTemplateExample,
-          title: 'Plain Old Property (Template)',
-          lang: 'html',
-        })}
-        <Slide>
-          <Heading size={1} textColor="secondary">
-            🎉
-          </Heading>
-        </Slide>
-        <Slide>
-          <Heading size={4} lineHeight={1.2} textColor="secondary">
-            How do we get{' '}
-            <S type="bold" textColor="blue">
-              observable
-            </S>{' '}
-            values from our component into our template?
-          </Heading>
-        </Slide>
-        {buildCodeSlide({
-          source: observablePropertyComponentExample,
-          title: 'Observable Property (Component)',
-        })}
-        {buildCodeSlide({
-          source: observablePropertyTemplateExample,
-          title: 'Observable Property (Template)',
-          lang: 'html',
-        })}
-        <Slide>
-          <Heading size={1} textColor="secondary">
-            🎊
-          </Heading>
+          <video controls width="100%" height="auto">
+            <source src={codeLazy} />
+          </video>
         </Slide>
         <Slide>
-          <Heading size={5} lineHeight={1} textColor="secondary">
-            What if my value is{' '}
-            <S type="bold" textColor="blue">
-              falsy
-            </S>
-            ?
-          </Heading>
+          <video controls width="100%" height="auto">
+            <source src={webLazy} />
+          </video>
         </Slide>
-        {buildCodeSlide({
-          source: booleanComponentExample,
-          title: 'Boolean Observable Property (Component)',
-          textSize: 18,
-        })}
-        {buildCodeSlide({
-          source: booleanNgIfTemplateExample,
-          title: 'Boolean Observable Property (Template)',
-          textSize: 22,
-          lang: 'html',
-        })}
-        <Slide>
-          <Heading size={1} textColor="secondary">
-            🤔
-          </Heading>
-        </Slide>
-        <Slide bgColor="primary" textColor="tertiary">
-          <Heading size={4} textColor="secondary">
-            What are our options?
-          </Heading>
-          <List>
-            <Appear>
-              <ListItem padding="10px 0">
-                Define the string in its own observable 😕
-              </ListItem>
-            </Appear>
-            <Appear>
-              <ListItem padding="10px 0">
-                Subscribe inside the click handler 😥
-              </ListItem>
-            </Appear>
-            <Appear>
-              <ListItem padding="10px 0">
-                Define a duplicated #else template 😫
-              </ListItem>
-            </Appear>
-            <Appear>
-              <ListItem padding="10px 0">???</ListItem>
-            </Appear>
-          </List>
-        </Slide>
-        <Slide>
-          <Heading size={3} lineHeight={1} textColor="secondary">
-            <S type="bold" textColor="blue">
-              psLet
-            </S>{' '}
-            to the rescue! 🚀
-          </Heading>
-        </Slide>
-        {buildCodeSlide({
-          source: booleanPsLetTemplateExample,
-          title: 'Boolean Observable Property (Revised)',
-          textSize: 22,
-          lang: 'html',
-        })}
-        <Slide>
-          <Heading size={1} textColor="secondary">
-            🍻
-          </Heading>
-        </Slide>
-        <Slide bgColor="primary" textColor="tertiary">
-          <Heading size={4} textColor="secondary">
-            When should I use it?
-          </Heading>
-          <List>
-            <Appear>
-              <ListItem textSize={34} padding="10px 0">
-                Expose an observable's value,{' '}
-                <S type="bold" textColor="blue">
-                  regardless of truthiness
-                </S>
-              </ListItem>
-            </Appear>
-            <Appear>
-              <ListItem textSize={34} padding="10px 0">
-                Render your template{' '}
-                <S type="bold" textColor="blue">
-                  unconditionally
-                </S>
-              </ListItem>
-            </Appear>
-            <Appear>
-              <ListItem textSize={34} padding="10px 0">
-                Communicate{' '}
-                <S type="bold" textColor="blue">
-                  semantic meaning
-                </S>
-              </ListItem>
-            </Appear>
-          </List>
-        </Slide>
-        <Slide bgColor="primary" textColor="tertiary">
-          <Heading size={4} textColor="secondary">
-            Caveats
-          </Heading>
-          <List>
-            <Appear>
-              <ListItem textSize={34} padding="10px 0">
-                <S type="bold">psLet</S> is{' '}
-                <S type="bold" textColor="blue">
-                  not
-                </S>{' '}
-                a replacement for <S type="bold">ngIf</S>
-              </ListItem>
-            </Appear>
-            <Appear>
-              <ListItem textSize={34} padding="10px 0">
-                Your template will{' '}
-                <S type="bold" textColor="blue">
-                  always
-                </S>{' '}
-                render
-              </ListItem>
-            </Appear>
-          </List>
-        </Slide>
-        <Slide>
-          <Heading size={1} textColor="secondary" bold>
-            That's it!
-          </Heading>
-          <Heading size={2} margin="50px 0 0" textColor="secondary">
-            👋
-          </Heading>
-        </Slide>
+
+
+        <QuestionSlide question={<React.Fragment><S type="bold" textColor="blue">Links</S></React.Fragment>} />
+        {AnswerSlide({answers: [
+            <Link href="https://angular.io/guide/lazy-loading-ngmodules"><S type="bold" textColor="blue">Angular Docs</S></Link>,
+            <Link href="https://codeburst.io/how-to-implement-lazy-loading-in-angular-6-419491102591?gi=1478f8b27e09"><S type="bold" textColor="blue">Tutorial 1</S></Link>,
+            <Link href="https://www.youtube.com/watch?v=V-1Fq_mAl20"><S type="bold" textColor="blue">Video Tutorial</S></Link>,
+          ]})}
+        <QuestionSlide question={<React.Fragment><S type="bold" textColor="blue">Thank you!</S></React.Fragment>} />
+
+
       </Deck>
     );
   }

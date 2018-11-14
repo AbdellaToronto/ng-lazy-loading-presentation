@@ -1,9 +1,0 @@
-class PolicySummary implements OnInit {
-  policy: Policy;
-
-  constructor(policiesStateService: PoliciesStateService) {}
-
-  ngOnInit() {
-    this.policy = this.policiesStateService.getPolicy();
-  }
-}

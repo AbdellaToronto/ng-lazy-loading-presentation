@@ -1,9 +1,0 @@
-<div *ngIf="isPolicyCanceled$ | async as isPolicyCanceled">
-  <p>
-    Your policy {{isPolicyCanceled ? 'is' : 'is not'}} canceled
-  </p>
-
-  <button (click)="togglePolicyCancelation(isPolicyCanceled)">
-    Toggle Cancelation
-  </button>
-</div>
